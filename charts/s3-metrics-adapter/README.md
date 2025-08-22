@@ -13,8 +13,8 @@ The S3 Event Exporter is a Prometheus exporter that monitors AWS S3 events throu
 - AWS credentials configured (IAM roles, access keys, or IRSA)
 - SQS q## Support
 
-- **GitHub Issues**: [Create an issue](https://github.com/codebyrupinder/s3_metrics_adapter/issues)
-- **Documentation**: [Project README](../../README.md)
+- **GitHub Issues**: [Create an issue](https://github.com/code-by-rupinder/s3-metrics-adaptor/issues)
+
 - **AWS Credentials Guide**: [Detailed credential configuration](../../docs/aws-credentials-guide.md)
 - **Docker Hub**: [codebyrupinder/s3_metrics_adapter](https://hub.docker.com/r/codebyrupinder/s3_metrics_adapter)
 
@@ -23,7 +23,6 @@ The S3 Event Exporter is a Prometheus exporter that monitors AWS S3 events throu
 | Environment | Credential Method | Example Values File |
 |-------------|------------------|-------------------|
 | **Amazon EKS** | IRSA | `values-production.yaml` |
-| **Google GKE** | Workload Identity | `values-production.yaml` |
 | **Self-managed on EC2** | Instance Profile | `examples/values-ec2-instance-profile.yaml` |
 | **On-premises** | Kubernetes Secret | `examples/values-onpremises.yaml` |
 | **Bare Metal** | External Secret | `examples/values-selfmanaged.yaml` |
@@ -45,7 +44,7 @@ helm repo update
 
 ```bash
 # Clone the repository
-git clone https://github.com/codebyrupinder/s3_metrics_adapter.git
+git clone https://github.com/code-by-rupinder/s3-metrics-adapter.git
 cd s3-metrics-adapter
 
 # Install the chart
@@ -97,11 +96,6 @@ helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
   --set config.sqs.queues[0]="https://sqs.us-west-2.amazonaws.com/123456789/my-queue"
 ```
 
-**For Google GKE with Workload Identity:**
-```bash
-helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
-  --set serviceAccount.annotations."iam\.gke\.io/gcp-service-account"="s3-exporter@project.iam.gserviceaccount.com"
-```
 
 #### Method 2: EC2 Instance Profile (Self-managed on EC2)
 
@@ -156,16 +150,14 @@ helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
 ```yaml
 config:
   sqs:
-    queues:
-      - "https://sqs.us-west-2.amazonaws.com/123456789/s3-events-queue"
-    buckets:
-      - name: "my-s3-bucket"
+**GitHub Issues**: [Create an issue](https://github.com/code-by-rupinder/s3-metrics-adaptor/issues)
+**Docker Hub**: [codebyrupinder/s3-metrics-adaptor](https://hub.docker.com/r/codebyrupinder/s3-metrics-adaptor)
         prefixes:
           - "logs/"
           - "data/"
     processUnlistedBuckets: true
     workerCount: 5
-    maxMessages: 10
+helm repo add s3-metrics-adaptor https://code-by-rupinder.github.io/s3-metrics-adaptor/
     waitTime: 20
 ```
 
@@ -173,14 +165,15 @@ config:
 
 #### Enable ServiceMonitor for Prometheus Operator
 
-```yaml
-serviceMonitor:
+git clone https://github.com/code-by-rupinder/s3-metrics-adaptor.git
+cd s3-metrics-adaptor
   enabled: true
   interval: 30s
   scrapeTimeout: 10s
   additionalLabels:
     release: prometheus
 ```
+helm install s3-metrics-adaptor ./charts/s3-metrics-adaptor \
 
 #### Enable PodMonitor
 
@@ -189,13 +182,13 @@ podMonitor:
   enabled: true
   interval: 30s
   scrapeTimeout: 10s
+  repository: ghcr.io/code-by-rupinder/s3-metrics-adaptor
 ```
 
 ### Autoscaling
 
-```yaml
-autoscaling:
-  enabled: true
+ GitHub Issues: [Create an issue](https://github.com/code-by-rupinder/s3-metrics-adaptor/issues)
+ Docker Hub: [codebyrupinder/s3-metrics-adaptor](https://hub.docker.com/r/codebyrupinder/s3-metrics-adaptor)
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80

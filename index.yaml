@@ -35,15 +35,15 @@ entries:
   - annotations:
       category: Monitoring
       images: |
-        - name: s3-metrics-adapter
-          image: codebyrupinder/s3-metrics-adapter:latest
+        - name: s3-metrics-prom-adaptor
+          image: codebyrupinder/s3-metrics-prom-adaptor:v1.0.0
       licenses: MIT
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-08-21T18:50:16.821465651Z"
+    created: "2025-08-22T05:12:13.29775094Z"
     description: A Prometheus s3 metrics adapter for AWS S3 events that converts SQS
       events to Prometheus metrics
-    digest: 66c09c4f81bd232985dfb2359b4f55ab3fc9f5b4001b336a5ed264cf8e231877
+    digest: 00be7f572eaa1a373e3ca381f2a4f6f1848f6e79c434484d0f30e4e078e59237
     home: https://github.com/code-by-rupinder/s3-metrics-adaptor
     keywords:
     - aws
@@ -63,4 +63,4 @@ entries:
     urls:
     - https://code-by-rupinder.github.io/helm-charts/packages/s3-metrics-adapter-1.0.0.tgz
     version: 1.0.0
-generated: "2025-08-21T18:50:16.820427317Z"
+generated: "2025-08-22T05:12:13.296642055Z"
