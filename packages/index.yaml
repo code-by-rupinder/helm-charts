@@ -1,0 +1,66 @@
+apiVersion: v1
+entries:
+  s3-metrics-adapter:
+  - annotations:
+      category: Monitoring
+      images: |
+        - name: s3-metrics-adapter
+          image: codebyrupinder/s3-metrics-adapter:latest
+      licenses: MIT
+    apiVersion: v2
+    appVersion: 1.0.1
+    created: "2025-08-21T18:50:16.794301269Z"
+    description: A Prometheus metrics adapter for AWS S3 events that converts SQS
+      events to Prometheus metrics
+    digest: b485262acc75e2ff2b60f56f9b3e807ab5527cebc25750de21d4242c252abfab
+    home: https://github.com/code-by-rupinder/s3-metrics-adaptor
+    keywords:
+    - aws
+    - s3
+    - prometheus
+    - monitoring
+    - metrics
+    - exporter
+    - observability
+    maintainers:
+    - email: codebyrupinder@gmail.com
+      name: codebyrupinder
+    name: s3-metrics-adapter
+    sources:
+    - https://github.com/code-by-rupinder/s3-metrics-adaptor
+    type: application
+    urls:
+    - https://code-by-rupinder.github.io/helm-charts/packages/s3-metrics-adapter-1.0.1.tgz
+    version: 1.0.1
+  - annotations:
+      category: Monitoring
+      images: |
+        - name: s3-metrics-adapter
+          image: codebyrupinder/s3-metrics-adapter:latest
+      licenses: MIT
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-08-21T18:50:16.793449848Z"
+    description: A Prometheus s3 metrics adapter for AWS S3 events that converts SQS
+      events to Prometheus metrics
+    digest: 66c09c4f81bd232985dfb2359b4f55ab3fc9f5b4001b336a5ed264cf8e231877
+    home: https://github.com/code-by-rupinder/s3-metrics-adaptor
+    keywords:
+    - aws
+    - s3
+    - prometheus
+    - monitoring
+    - metrics
+    - exporter
+    - observability
+    maintainers:
+    - email: codebyrupinder@gmail.com
+      name: codebyrupinder
+    name: s3-metrics-adapter
+    sources:
+    - https://github.com/code-by-rupinder/s3-metrics-adaptor
+    type: application
+    urls:
+    - https://code-by-rupinder.github.io/helm-charts/packages/s3-metrics-adapter-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-08-21T18:50:16.79240415Z"

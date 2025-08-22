@@ -1,0 +1,45 @@
+name: Release Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/*.tgz"
+      - "packages/Chart.yaml"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for yq)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install yq
+        run: pip install yq
+
+      - name: Find new chart package
+        id: chart
+        run: |
+          TGZ_FILE=$(ls packages/*.tgz | sort | tail -n 1)
+          CHART_YAML=$(tar --wildcards -xOf "$TGZ_FILE" '*/Chart.yaml')
+          VERSION=$(echo "$CHART_YAML" | yq -r .version)
+          NAME=$(echo "$CHART_YAML" | yq -r .name)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "tgz=$TGZ_FILE" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.chart.outputs.version }}
+          name: ${{ steps.chart.outputs.name }} ${{ steps.chart.outputs.version }}
+          body: "Automated release of Helm chart ${{ steps.chart.outputs.name }} version ${{ steps.chart.outputs.version }}."
+          files: ${{ steps.chart.outputs.tgz }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
