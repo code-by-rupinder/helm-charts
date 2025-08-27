@@ -1,6 +1,6 @@
 apiVersion: v2
 name: s3-metrics-adapter
-description: A Prometheus s3 metrics adapter for AWS S3 events that converts SQS events to Prometheus metrics
+description: A Prometheus s3 metrics adapter  for AWS S3 events that converts SQS events to Prometheus metrics
 type: application
 version: 1.0.0
 appVersion: "1.0.0"

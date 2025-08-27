@@ -9,10 +9,10 @@ entries:
       licenses: MIT
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-08-26T06:56:32.365955613Z"
-    description: A Prometheus s3 metrics adapter for AWS S3 events that converts SQS
-      events to Prometheus metrics
-    digest: c1417b961bc4079c4cb973445e1581e588f26a3e4711746363b75ddcd99922ba
+    created: "2025-08-26T22:50:04.605528491Z"
+    description: A Prometheus s3 metrics adapter  for AWS S3 events that converts
+      SQS events to Prometheus metrics
+    digest: 41b57e310b84f402bfafe79d09b94d3b1cc25735b470c12702f90b4497117777
     home: https://github.com/code-by-rupinder/s3-metrics-adaptor
     keywords:
     - aws
@@ -32,4 +32,4 @@ entries:
     urls:
     - https://code-by-rupinder.github.io/helm-charts/packages/s3-metrics-adapter-1.0.0.tgz
     version: 1.0.0
-generated: "2025-08-26T06:56:32.364928291Z"
+generated: "2025-08-26T22:50:04.604481934Z"
