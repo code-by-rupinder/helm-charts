@@ -131,7 +131,7 @@ config:
     types:
       eventTotal: true
       objectSize: true
-      userTotal: true
+  # userTotal: true (removed deprecated metric)
       ipTotal: true
       prefixTotal: true
       prefixDepthTotal: true

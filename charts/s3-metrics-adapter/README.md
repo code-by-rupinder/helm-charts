@@ -20,13 +20,13 @@ The S3 Event Exporter is a Prometheus exporter that monitors AWS S3 events throu
 
 ## Quick Reference by Environment
 
-| Environment | Credential Method | Example Values File |
-|-------------|------------------|-------------------|
-| **Amazon EKS** | IRSA | `values-production.yaml` |
-| **Self-managed on EC2** | Instance Profile | `examples/values-ec2-instance-profile.yaml` |
-| **On-premises** | Kubernetes Secret | `examples/values-onpremises.yaml` |
-| **Bare Metal** | External Secret | `examples/values-selfmanaged.yaml` |
-| **Development** | Manual Secret | `examples/values-dev.yaml` |
+| Environment             | Credential Method | Example Values File                         |
+| ----------------------- | ----------------- | ------------------------------------------- |
+| **Amazon EKS**          | IRSA              | `values-production.yaml`                    |
+| **Self-managed on EC2** | Instance Profile  | `examples/values-ec2-instance-profile.yaml` |
+| **On-premises**         | Kubernetes Secret | `examples/values-onpremises.yaml`           |
+| **Bare Metal**          | External Secret   | `examples/values-selfmanaged.yaml`          |
+| **Development**         | Manual Secret     | `examples/values-dev.yaml`                  |
 
 For detailed setup instructions for each environment, see the [AWS Credentials Guide](../../docs/aws-credentials-guide.md). configured to receive S3 event notifications
 
@@ -69,33 +69,33 @@ helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
 
 The following table lists the configurable parameters and their default values:
 
-| Parameter | Description | Default |
-|-----------|-------------|---------|
-| `replicaCount` | Number of replicas | `1` |
+| Parameter          | Description                | Default                             |
+| ------------------ | -------------------------- | ----------------------------------- |
+| `replicaCount`     | Number of replicas         | `1`                                 |
 | `image.repository` | Container image repository | `codebyrupinder/s3_metrics_adapter` |
-| `image.tag` | Container image tag | `1.0.1` |
-| `image.pullPolicy` | Image pull policy | `IfNotPresent` |
+| `image.tag`        | Container image tag        | `1.0.1`                             |
+| `image.pullPolicy` | Image pull policy          | `IfNotPresent`                      |
 
 ### AWS Configuration
 
 The chart supports multiple AWS credential methods depending on your Kubernetes environment:
 
-| Method | Environment | Security | Recommended |
-|--------|-------------|----------|-------------|
-| **Cloud IAM** | EKS, GKE | ⭐⭐⭐⭐⭐ | ✅ Managed K8s |
-| **Instance Profile** | Self-managed on EC2 | ⭐⭐⭐⭐ | ✅ EC2 clusters |
-| **External Secret** | Any | ⭐⭐⭐⭐ | ✅ Production |
-| **Kubernetes Secret** | Any | ⭐⭐⭐ | ⚠️ Development |
+| Method                | Environment         | Security   | Recommended     |
+| --------------------- | ------------------- | ---------- | --------------- |
+| **Cloud IAM**         | EKS, GKE            | ⭐⭐⭐⭐⭐ | ✅ Managed K8s  |
+| **Instance Profile**  | Self-managed on EC2 | ⭐⭐⭐⭐   | ✅ EC2 clusters |
+| **External Secret**   | Any                 | ⭐⭐⭐⭐   | ✅ Production   |
+| **Kubernetes Secret** | Any                 | ⭐⭐⭐     | ⚠️ Development  |
 
 #### Method 1: Cloud Provider IAM (Managed Kubernetes)
 
 **For Amazon EKS with IRSA:**
+
 ```bash
 helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
   --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"="arn:aws:iam::123456789:role/S3EventExporterRole" \
   --set config.sqs.queues[0]="https://sqs.us-west-2.amazonaws.com/123456789/my-queue"
 ```
-
 
 #### Method 2: EC2 Instance Profile (Self-managed on EC2)
 
@@ -139,6 +139,7 @@ helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
 ```
 
 **Alternative with existing secret:**
+
 ```bash
 helm install s3-metrics-adapter s3-metrics-adapter/s3-metrics-adapter \
   --set awsCredentials.existingSecret.name="aws-credentials" \
@@ -167,12 +168,13 @@ helm repo add s3-metrics-adaptor https://code-by-rupinder.github.io/s3-metrics-a
 
 git clone https://github.com/code-by-rupinder/s3-metrics-adaptor.git
 cd s3-metrics-adaptor
-  enabled: true
-  interval: 30s
-  scrapeTimeout: 10s
-  additionalLabels:
-    release: prometheus
-```
+enabled: true
+interval: 30s
+scrapeTimeout: 10s
+additionalLabels:
+release: prometheus
+
+````
 helm install s3-metrics-adaptor ./charts/s3-metrics-adaptor \
 
 #### Enable PodMonitor
@@ -183,17 +185,18 @@ podMonitor:
   interval: 30s
   scrapeTimeout: 10s
   repository: ghcr.io/code-by-rupinder/s3-metrics-adaptor
-```
+````
 
 ### Autoscaling
 
- GitHub Issues: [Create an issue](https://github.com/code-by-rupinder/s3-metrics-adaptor/issues)
- Docker Hub: [codebyrupinder/s3-metrics-adaptor](https://hub.docker.com/r/codebyrupinder/s3-metrics-adaptor)
-  minReplicas: 1
-  maxReplicas: 10
-  targetCPUUtilizationPercentage: 80
-  targetMemoryUtilizationPercentage: 80
-```
+GitHub Issues: [Create an issue](https://github.com/code-by-rupinder/s3-metrics-adaptor/issues)
+Docker Hub: [codebyrupinder/s3-metrics-adaptor](https://hub.docker.com/r/codebyrupinder/s3-metrics-adaptor)
+minReplicas: 1
+maxReplicas: 10
+targetCPUUtilizationPercentage: 80
+targetMemoryUtilizationPercentage: 80
+
+````
 
 ### Security
 
@@ -213,7 +216,7 @@ securityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 65532
-```
+````
 
 #### Network Policy
 
@@ -235,7 +238,7 @@ networkPolicy:
     - to: []
       ports:
         - protocol: TCP
-          port: 443  # HTTPS for AWS APIs
+          port: 443 # HTTPS for AWS APIs
 ```
 
 ## Examples
@@ -441,7 +444,7 @@ helm uninstall s3-metrics-adapter --namespace monitoring
 
 - `s3_events_total` - Total number of S3 events processed
 - `s3_object_size_bytes` - Distribution of object sizes
-- `s3_events_by_user_total` - Events grouped by user
+<!-- Removed deprecated metric: s3_events_by_user_total -->
 - `s3_events_by_ip_total` - Events grouped by source IP
 - `s3_processing_latency_seconds` - Processing latency metrics
 
@@ -454,15 +457,17 @@ A Grafana dashboard is available in the `grafana/` directory of the repository.
 ### Common Issues
 
 1. **AWS Permissions**
+
    ```bash
    # Check service account annotations
    kubectl describe serviceaccount s3-metrics-adapter -n monitoring
-   
+
    # Check pod logs
    kubectl logs -l app.kubernetes.io/name=s3-metrics-adapter -n monitoring
    ```
 
 2. **SQS Connectivity**
+
    ```bash
    # Test SQS connectivity from pod
    kubectl exec -it deployment/s3-metrics-adapter -n monitoring -- /usr/local/bin/s3-metrics-adapter -help
@@ -496,29 +501,23 @@ The exporter needs IAM permissions to access SQS and S3. Here's an example IAM p
 
 ```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "sqs:ReceiveMessage",
-                "sqs:DeleteMessage",
-                "sqs:GetQueueAttributes"
-            ],
-            "Resource": "arn:aws:sqs:*:*:*"
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:GetObject",
-                "s3:ListBucket"
-            ],
-            "Resource": [
-                "arn:aws:s3:::*/*",
-                "arn:aws:s3:::*"
-            ]
-        }
-    ]
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "arn:aws:sqs:*:*:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:ListBucket"],
+      "Resource": ["arn:aws:s3:::*/*", "arn:aws:s3:::*"]
+    }
+  ]
 }
 ```
 
